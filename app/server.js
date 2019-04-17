@@ -4,15 +4,16 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 
 const { PORT, HTTP_STATUS_CODES, MONGO_URL, TEST_MONGO_URL } = require('./config');
-// const { authRouter } = require('./auth/auth.router');
-// const { userRouter } = require('./user/user.router');
-// const { propertyRouter } = require('./property/property.router');
-// const { localStrategy, jwtStrategy } = require('./auth/auth.strategy');
+const { authRouter } = require('./auth/auth.router');
+const { userRouter } = require('./user/user.router');
+const { householdRouter } = require('./household/household.router');
+const { billRouter } = require('./bill/bill.router');
+const { localStrategy, jwtStrategy } = require('./auth/auth.strategy');
 
 let server;
 const app = express(); 
-// passport.use(localStrategy); 
-// passport.use(jwtStrategy); 
+passport.use(localStrategy); 
+passport.use(jwtStrategy); 
 
 // MIDDLEWARE
 app.use(morgan('combined')); 
@@ -20,9 +21,10 @@ app.use(express.json());
 app.use(express.static('./public')); 
 
 // ROUTER SETUP
-// app.use('/api/auth', authRouter); 
-// app.use('/api/user', userRouter); 
-// app.use('/api/property', propertyRouter); 
+app.use('/api/auth', authRouter); 
+app.use('/api/user', userRouter); 
+app.use('/api/household', householdRouter); 
+app.use('/api/bill', billRouter);
 
 
 app.use('*', function (req, res) {
