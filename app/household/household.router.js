@@ -11,7 +11,6 @@ householdRouter.post('/', jwtPassportMiddleware, (req, res)=> {
     const newHousehold = {
         user: req.user.id,
         address: req.body.address,
-        roommate: req.body.roommate,
         bills: req.body.bills
     };
 
@@ -72,8 +71,8 @@ householdRouter.get('/:Householdid', (req,res)=>{
 //UPDATE Household BY ID
 householdRouter.put('/:Householdid', jwtPassportMiddleware, (req, res)=> {
     const HouseholdUpdate = {
+        user: req.body.user,
         address: req.body.address,
-        roommate: req.body.roommate,
         bills: req.body.bills
     };
     const validation = Joi.validate(HouseholdUpdate, HouseholdJoiSchema);

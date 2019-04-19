@@ -9,10 +9,10 @@ const { Bill, BillJoiSchema } = require('./bill.model');
 //create new Bill
 billRouter.post('/', jwtPassportMiddleware, (req, res)=> {
     const newBill = {
-        household: req.household.id,
+        // household: req.household.id,
         billType: req.body.billType,
-        billAmount: req.body.billAmount,
-        billDue: req.body.billDue
+        billAmount: req.body.billAmount
+        // billDue: req.body.billDue
     };
 
     const validation = Joi.validate(newBill, BillJoiSchema);
@@ -20,9 +20,9 @@ billRouter.post('/', jwtPassportMiddleware, (req, res)=> {
             return res.status(HTTP_STATUS_CODES.BAD_REQUEST).json(
                 {error:validation.error});
         }
-        Bill.create(newbill)
+        Bill.create(newBill)
         .then(createdBill =>{
-            return res.status(HTTP_STATUS_CODES.CREATED).json(createdBill.serialize())
+            return res.status(HTTP_STATUS_CODES.CREATED).json(createdBill.serialize());
         })
         .catch(error=> {
             return res.status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR).json(error);
@@ -58,8 +58,8 @@ billRouter.get('/:Billid', (req,res)=>{
 billRouter.put('/:Billid', jwtPassportMiddleware, (req,res)=>{
     const BillUpdate = {
         billType: req.body.billType,
-        billAmount: req.body.billAmount,
-        billDue: req.body.billDue
+        billAmount: req.body.billAmount
+        // billDue: req.body.billDue
     };
     const validation = Joi.validate(BillUpdate, BillJoiSchema);
     if(validation.error) {
